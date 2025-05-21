@@ -229,7 +229,8 @@
             </div>
         </main>
     </div>
-
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/lib/marked.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
@@ -239,7 +240,7 @@
         }
 
         async function downloadPDF(){
-            const {jsPDF}=window.jsPDF;
+            const {jsPDF}=window.jspdf;
             const pdf = new jsPDF('p','mm','a4');
             const content = document.body;
 
@@ -291,6 +292,8 @@
         async function toggleChat(){
             const chatbox = document.getElementById("chatbox");
             if(!aiInitialized){
+            aiInitialized = true;
+            chatbox.style.display = 'flex';
             const symbol = "0050.TW";
                 if (!symbol) return alert("請輸入股票代號");
 
@@ -304,8 +307,6 @@
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    aiInitialized = true;
-                    chatbox.style.display = 'flex';
                     history = data.history;
                     appendMessage("bot", data.reply);
                 }
