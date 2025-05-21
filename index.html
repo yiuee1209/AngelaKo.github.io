@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>柯婷堉：Angela Ko</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body{
+            margin: 0;
+            font-family: 'Poppins',sans-serif;
+            background-color: #fdfcfc;
+            color: #333;
+        }
+        header{
+            position: sticky;
+            top: 0;
+            background-color: #f7e8eb;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+        .menu-btn{
+            background-color: #b2748b;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .menu-btn:hover{
+            background-color: #a0627a;
+        }
+        .container{
+            display: flex;
+            flex-direction: row;
+            min-height: 100vh;
+        }
+        .sidebar{
+            background-color: #f7e8eb;
+            padding: 2rem;
+            width: 280px;
+            flex-shrink: 0;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-top: 3rem;
+            padding-left: 1.5rem;
+        }
+        .main{
+            flex-grow: 1;
+            padding: 2rem;
+            animation: fadeIn 1s ease;
+        }
+        .card{
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease,box-shadow 0.3s ease;
+        }
+        .card:hover{
+            transform: translateY(-4px);
+            box-shadow: 0 4px 140x rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3{
+            color: #b2748b;
+            margin-top: 0;
+            margin-left: 1rem;
+        }
+        p{
+            margin-left: 1rem;
+        }
+        .section-title{
+            border-bottom: 2px solid #f1cfd5;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .toggle-content{
+            display: none;
+        }
+        .toggle-button{
+            cursor: pointer;
+            color: #b2748b;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: flex-end;
+            
+        }
+        #chatbox{
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+            flex-direction: column;
+            height: 300px;
+        }
+        #chatlog{
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 0.5rem;
+            margin-left: 0.5rem;
+        }
+        #chatlog div{
+            margin-bottom: 0.3rem;
+            margin-left: 0.3rem;
+        }
+        #userInput{
+            display: flex;
+            gap:0.5rem;
+            margin-left: 0.5rem;
+        }
+        #userInput input{
+            flex-grow: 1;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-left: 0.5rem;
+        }
+        #userInput button{
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #b2748b;
+            color: #fff;
+            cursor: pointer;
+        }
+        @keyframes fadeIn{
+            from {opacity: 0; transform: translateY(10px);}
+            op {opacity: 1;transform: translateY(0);}
+        }
+        @media(max-width: 768px){
+            .container{
+                flex-direction: column;
+            }
+            .sidebar{
+                width: 100%;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="menu-btn" onclick="downloadPDF()">下載PDF</button>
+        <button class="menu-btn" onclick="toggleLanguage()">切換英文版</button>
+        <button class="menu-btn" onclick="toggleChat()">啟用AI聊天室</button>
+    </header>
+    <div class="container">
+        <aside class="siderbar">
+            <div>
+                <h2>柯婷堉：Angela Ko</h2>
+                <p>職稱 / 數據分析師</p>
+                <hr>
+                <h3>聯絡資訊</h3>
+                <ul>
+                    <li>Email: tinyuhko@gmail.com</li>
+                    <li>電話： 0955-845-495</li>
+                    <li>LinkedIn： </li>
+                    <li>GitHub： yiuee1209</li>
+                </ul>
+                
+                <h3>專業技能（主要使用）</h3>
+                <ul>
+                    <li>SQL</li>
+                    <li>Python</li>
+                    <li>Excel VBA</li>
+                    <li>Power Automate</li>
+                    <li>PowerBI</li>
+                </ul>
+
+                <h3>專業技能（次要使用）</h3>
+                <ul>
+                    <li>Html + JavaScript</li>
+                    <li>R code</li>
+                </ul>
+            </div>
+            <div id="chatbox">
+                <div id="chatlog"></div>
+                <div id="userInput">
+                    <input type="text" id="chatInput" placeholder="和我聊聊...">
+                    <button onclick="sendMessage()">送出</button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main">
+            <div class="card">
+                <h2 class="section-title">自我介紹</h2>
+                <p>我想不到，給我一點時間</p>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title">工作經歷</h2>
+                <div>
+                    <h3>台新人壽 / 數據分析師</h3>
+                    <span class="toggle-button" onclick="toggleSection(this)">點擊展開 / 收起詳細內容</span>
+                    <div class="toggle-content">
+                        <p>專案經歷</p>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <h3>SCOR / 精算實習</h3>
+                    <span class="toggle-button" onclick="toggleSection(this)">點擊展開 / 收起詳細內容</span>
+                    <div class="toggle-content">
+                        <p>專案經歷</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h2 class="section-title">學歷</h2>
+                <p>// 喬治亞州立大學 / 量化風險分析與管理學系 / 碩士 / 2023</p>
+                <p>// 喬治亞州立大學 / 精算科學系 / 碩士 / 2023</p>
+                <p>// 東吳大學 / 財務工程與精算數學系 / 學士 / 2019 </p>
+            </div>
+            <div class="card">
+                <h2 class="section-title">相關榮譽</h2>
+                <p>先空白</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        function toggleSection(button){
+            const content = button.nextElementSibling;
+            content.style.display = (content.style.display === 'block') ? 'none':'block';
+        }
+
+        async function downloadPDF(){
+            const {jsPDF}=window.jsPDF;
+            const pdf = new jsPDF('p','mm','a4');
+            const content = document.body;
+
+            await html2canvas(content,{scale:2}).then(canvas =>{
+                const imgData = cavas.toDataURL('image/png');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight);
+                pdf.save('AngelaKo_Resume.pdf')
+            })
+        }
+
+        function toggleLanguage(){
+            alert("我還沒做好啦");
+        }
+
+
+
+        let history = [];
+    
+        const customRenderer = new marked.Renderer();
+        customRenderer.link = function(href, title, text) {
+          let html = `<a href="${href}"`;
+          if (title) {
+            html += ` title="${title}"`;
+          }
+          html += ` target="_blank" rel="noopener noreferrer">${text}</a>`;
+          return html;
+        };
+        
+        marked.setOptions({
+          renderer: customRenderer,
+        breaks: true
+        });
+
+        function appendMessage(role, text) {
+            const log = document.getElementById("chatlog");
+            const div = document.createElement("div");
+            div.className = "message " + role;
+            div.innerHTML = `<strong>${role === 'user' ? '您' : '代理AngelaKO'}:</strong> ${marked.parse(text)}`;
+            log.appendChild(div);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        //阿韭代打，之後要改
+
+        let aiInitialized = false;
+        async function toggleChat(){
+            const chatbox = document.getElementById("chatbox");
+            if(!aiInitialized){
+            const symbol = "0050.TW";
+                if (!symbol) return alert("請輸入股票代號");
+
+                const res = await fetch("https://beststockhelper-chat.onrender.com/init", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ symbol })
+                });
+
+                const data = await res.json();
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    aiInitialized = true;
+                    chatbox.style.display = 'flex';
+                    history = data.history;
+                    appendMessage("bot", data.reply);
+                }
+            } else {
+                chatbox.style.display = chatbox.style.display === 'none' ? 'flex':'none';
+            }
+        }
+
+        function sendMessage(){
+            const input = document.getElementById("chatInput");
+            const message = input.value.trim();
+            if (!message) return;
+
+            appendMessage("user", message);
+            input.value = "";
+
+            const res = await fetch("https://beststockhelper-chat.onrender.com/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message, history })
+            });
+
+            const data = await res.json();
+            if (data.error) {
+                alert(data.error);
+            } else {
+                history = data.history;
+                appendMessage("bot", data.reply);
+            }
+        }
+
+
+        document.getElementById("chatInput").addEventListener("keypress",function(e){
+            if(e.key === "Enter") sendMessage();
+        });
+
+    </script>
+
+
+
+
+</body>
+</html>
