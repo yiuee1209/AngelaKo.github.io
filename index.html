@@ -288,7 +288,7 @@
         //阿韭代打，之後要改
 
         let aiInitialized = false;
-        function toggleChat(){
+        async function toggleChat(){
             const chatbox = document.getElementById("chatbox");
             if(!aiInitialized){
             const symbol = "0050.TW";
@@ -314,7 +314,7 @@
             }
         }
 
-        function sendMessage(){
+        async function sendMessage(){
             const input = document.getElementById("chatInput");
             const message = input.value.trim();
             if (!message) return;
