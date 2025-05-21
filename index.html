@@ -297,7 +297,7 @@
             const symbol = "0050.TW";
                 if (!symbol) return alert("請輸入股票代號");
 
-                const res = await fetch("https://beststockhelper-chat.onrender.com/init", {
+                const res = await fetch("https://angelako-chat.onrender.com/init", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ symbol })
@@ -325,7 +325,7 @@
             appendMessage("user", message);
             input.value = "";
 
-            const res = await fetch("https://beststockhelper-chat.onrender.com/chat", {
+            const res = await fetch("https://angelako-chat.onrender.com/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message, history })
