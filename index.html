@@ -103,6 +103,9 @@
             display: none;
             flex-direction: column;
             height: 300px;
+            width:280px;
+            word-wrap: break-word; 
+            overflow-wrap: break-word; 
         }
         #chatlog{
             flex-grow: 1;
@@ -294,8 +297,8 @@
             if(!aiInitialized){
             aiInitialized = true;
             chatbox.style.display = 'flex';
-            const symbol = "0050.TW";
-                if (!symbol) return alert("請輸入股票代號");
+            const symbol = "現在請您簡單的介紹一下自己（柯婷堉），不要超過200字，並禮貌地詢問對方有什麼問題";
+                if (!symbol) return alert("初始化失敗");
 
                 const res = await fetch("https://angelako-chat.onrender.com/init", {
                     method: "POST",
