@@ -57,6 +57,7 @@
             flex-grow: 1;
             padding: 2rem;
             animation: fadeIn 1s ease;
+            background-color: #fff;
         }
         .card{
             background-color: #fff;
@@ -248,16 +249,18 @@
             const pdf = new jsPDF('p','mm','a4');
             const content = document.body;
 
-            const hiddenSections = [];
-            document.querySelectorAll('[style*="display: none"]').forEach(ell => {
-                hiddenSections.push(el);
+            const toggles = document.querySelectorAll('.toggle-content');
+            const originalDisplay = [];
+            toggles.forEach(el => {
+                originalDisplay.push(el.style.display);
                 el.style.display = 'block';
             });
 
-            await new Promise(resolve => setTimeout(resolve,300));
+            await new Promise(resolve => setTimeout(resolve, 300));
 
             await html2canvas(content,{scale:2,
-                                      backgroundColor:'#ffffff'
+                                      backgroundColor:'#ffffff',
+                                      useCORS: true
                                       }).then(canvas =>{
                 const imgData = canvas.toDataURL('image/png');
                 const imgProps = pdf.getImageProperties(imgData);
@@ -267,8 +270,8 @@
                 pdf.save('AngelaKo_Resume.pdf')
             });
 
-            hiddenSections.forEach(el =>{
-                el.style.display = 'none';
+            toggles.forEach((el, i) => {
+                el.style.display = originalDisplay[i];
             });
         }
 
@@ -304,7 +307,7 @@
             log.scrollTop = log.scrollHeight;
         }
         
-        //阿韭代打，之後要改
+        //會噴簡中，還要調整
 
         let aiInitialized = false;
         async function toggleChat(){
@@ -312,7 +315,7 @@
             if(!aiInitialized){
             aiInitialized = true;
             chatbox.style.display = 'flex';
-            const symbol = "現在請您簡單的介紹一下自己（柯婷堉），不要超過200字，並禮貌地詢問對方有什麼問題";
+            const symbol = "現在請您簡單的介紹一下自己（柯婷堉），不要超過100字，並禮貌地詢問對方有什麼問題，預設語言是繁體中文。";
                 if (!symbol) return alert("初始化失敗");
 
                 const res = await fetch("https://angelako-chat.onrender.com/init", {
