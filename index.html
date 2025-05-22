@@ -255,16 +255,9 @@
                 el.style.display = 'block';
             });
 
-            const cards = document.querySelectorAll('.card');
-            const originalShadows = [];
-            cards.forEach(card => {
-                originalShadows.push(card.style.boxShadow);
-                card.style.boxShadow = 'none';
-            });
-
             await new Promise(resolve => setTimeout(resolve, 300));
 
-            await html2canvas(content,{scale:2,
+            await html2canvas(content,{scale:3,
                                       useCORS: true
                                       }).then(canvas =>{
                 const imgData = canvas.toDataURL('image/png');
@@ -277,10 +270,6 @@
 
             toggles.forEach((el, i) => {
                 el.style.display = originalDisplay[i];
-            });
-
-            cards.forEach((card, i) => {
-                originalShadows[i];
             });
         }
 
