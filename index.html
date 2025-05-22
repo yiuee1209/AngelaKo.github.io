@@ -57,7 +57,6 @@
             flex-grow: 1;
             padding: 2rem;
             animation: fadeIn 1s ease;
-            background-color: #fff;
         }
         .card{
             background-color: #fff;
@@ -259,14 +258,13 @@
             await new Promise(resolve => setTimeout(resolve, 300));
 
             await html2canvas(content,{scale:2,
-                                      backgroundColor:'#ffffff',
                                       useCORS: true
                                       }).then(canvas =>{
                 const imgData = canvas.toDataURL('image/png');
                 const imgProps = pdf.getImageProperties(imgData);
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight);
+                pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight, undefined, 'FAST');
                 pdf.save('AngelaKo_Resume.pdf')
             });
 
