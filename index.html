@@ -255,6 +255,13 @@
                 el.style.display = 'block';
             });
 
+            const cards = document.querySelectorAll('.card');
+            const originalShadows = [];
+            cards.forEach(card => {
+                originalShadows.push(card.style.boxShadow);
+                card.style.boxShadow = 'none';
+            });
+
             await new Promise(resolve => setTimeout(resolve, 300));
 
             await html2canvas(content,{scale:2,
@@ -264,12 +271,16 @@
                 const imgProps = pdf.getImageProperties(imgData);
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight, undefined, 'FAST');
+                pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight);
                 pdf.save('AngelaKo_Resume.pdf')
             });
 
             toggles.forEach((el, i) => {
                 el.style.display = originalDisplay[i];
+            });
+
+            cards.forEach((card, i) => {
+                originalShadows[i];
             });
         }
 
