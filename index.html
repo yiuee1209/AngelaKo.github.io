@@ -68,7 +68,7 @@
         }
         .card:hover{
             transform: translateY(-4px);
-            box-shadow: 0 4px 140x rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
         }
         h1, h2, h3{
             color: #b2748b;
@@ -257,8 +257,24 @@
 
             await new Promise(resolve => setTimeout(resolve, 300));
 
+
+            // 儲存原始樣式
+            const originalTransition = content.style.transition;
+            const originalOpacity = content.style.opacity;
+            const originalClasses = [...content.classList];
+            
+            // 暫時移除動畫與互動效果
             content.classList.remove('fadeIn');
             content.style.opacity = '1';
+            content.style.transition = 'none';
+            
+            // 移除所有卡片的 hover 效果
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.transition = 'none';
+                card.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.08)'; // 固定陰影
+            });
+
 
             await html2canvas(content,{
                 scale:3,
@@ -270,9 +286,17 @@
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
                 pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight);
                 pdf.save('AngelaKo_Resume.pdf')
+                // 還原樣式
+                content.style.transition = originalTransition;
+                content.style.opacity = originalOpacity;
+                content.className = ''; // 清空 class
+                originalClasses.forEach(cls => content.classList.add(cls));
+                
+                cards.forEach(card => {
+                    card.style.transition = '';
+                    card.style.boxShadow = '';
+                });
             });
-            
-            content.classList.add('fadeIn');
 
             toggles.forEach((el, i) => {
                 el.style.display = originalDisplay[i];
