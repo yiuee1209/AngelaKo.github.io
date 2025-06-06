@@ -257,15 +257,18 @@
 
             await new Promise(resolve => setTimeout(resolve, 300));
 
-            await html2canvas(content,{scale:3,
-                                      useCORS: true
-                                      }).then(canvas =>{
-                const imgData = canvas.toDataURL('image/png');
-                const imgProps = pdf.getImageProperties(imgData);
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight);
-                pdf.save('AngelaKo_Resume.pdf')
+            await content.addEventListener('animationend', () => {
+                html2canvas(content,{
+                    scale:3,
+                    useCORS: true
+                }).then(canvas =>{
+                    const imgData = canvas.toDataURL('image/png');
+                    const imgProps = pdf.getImageProperties(imgData);
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                    pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight);
+                    pdf.save('AngelaKo_Resume.pdf')
+                });
             });
 
             toggles.forEach((el, i) => {
@@ -313,7 +316,7 @@
             if(!aiInitialized){
             aiInitialized = true;
             chatbox.style.display = 'flex';
-            const symbol = "現在請您簡單的介紹一下自己（柯婷堉），不要超過100字，並禮貌地詢問對方有什麼問題，預設語言是繁體中文。";
+            const symbol = "請您簡單的介紹一下自己（柯婷堉），不要超過100字，並禮貌地詢問對方有什麼問題，預設語言是繁體中文。";
                 if (!symbol) return alert("初始化失敗");
 
                 const res = await fetch("https://angelako-chat.onrender.com/init", {
