@@ -65,6 +65,7 @@
             padding: 1.5rem;
             margin-bottom: 1rem;
             transition: transform 0.3s ease,box-shadow 0.3s ease;
+            z-index: 999;
         }
         .card:hover{
             transform: translateY(-4px);
@@ -259,7 +260,7 @@
             await new Promise(resolve => setTimeout(resolve, 500));
 
             await html2canvas(content,{
-                scale:3,
+                scale:2,
                 useCORS: true
             }).then(canvas =>{
                 const imgData = canvas.toDataURL('image/png');
