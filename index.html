@@ -65,7 +65,6 @@
             padding: 1.5rem;
             margin-bottom: 1rem;
             transition: transform 0.3s ease,box-shadow 0.3s ease;
-            z-index: 999;
         }
         .card:hover{
             transform: translateY(-4px);
@@ -114,6 +113,15 @@
             cursor: move;
             z-index: 2000;
         }
+        #chatHeader {
+            background-color: #f1cfd5;
+            padding: 0.5rem;
+            cursor: move;
+            font-weight: bold;
+            border-radius: 8px 8px 0 0;
+            user-select: none;
+        }
+
         #chatlog{
             flex-grow: 1;
             overflow-y: auto;
@@ -195,6 +203,7 @@
                 </ul>
             </div>
             <div id="chatbox">
+                <div id ="chatHeader">AI聊天室</div>
                 <div id="chatlog"></div>
                 <div id="userInput">
                     <input type="text" id="chatInput" placeholder="和我聊聊...">
@@ -245,18 +254,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         
-        let chatbox = document.getElementById("chatbox");
+
+        const chatbox = document.getElementById("chatbox");
+        const chatHeader = document.getElementById("chatHeader");
         let isDragging = false;
         let offsetX, offsetY;
 
-        chatbox.addEventListener("mousedown", function(e) {
-            if (e.target.closest("#userInput")) return; // 避免拖動輸入區
+        chatHeader.addEventListener("mousedown", function(e) {
             isDragging = true;
             offsetX = e.clientX - chatbox.offsetLeft;
             offsetY = e.clientY - chatbox.offsetTop;
-            chatbox.style.cursor = "grabbing";
+            chatHeader.style.cursor = "grabbing";
         });
-        
+
         document.addEventListener("mousemove", function(e) {
             if (isDragging) {
                 chatbox.style.left = (e.clientX - offsetX) + "px";
@@ -266,46 +276,102 @@
 
         document.addEventListener("mouseup", function() {
             isDragging = false;
-            chatbox.style.cursor = "move";
+            chatHeader.style.cursor = "move";
         });
+
         
         function toggleSection(button){
             const content = button.nextElementSibling;
             content.style.display = (content.style.display === 'block') ? 'none':'block';
         }
 
-        async function downloadPDF(){
-            const {jsPDF}=window.jspdf;
-            const pdf = new jsPDF('p','mm','a4');
-            const content = document.querySelector('.container'); //document.body;
-            content.style.backgroundColor = '#ffffff';
-            
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const content = document.querySelector('.container');
+
+            // 暫存原始樣式
+            const header = document.querySelector('header');
+            const originalHeaderDisplay = header.style.display;
+
+            const main = document.querySelector('.main');
+            const sidebar = document.querySelector('.sidebar');
+
+            const originalMainStyles = {
+                animation: main.style.animation,
+                opacity: main.style.opacity,
+                transform: main.style.transform,
+                backgroundColor: main.style.backgroundColor,
+                color: main.style.color
+            };
+
+            const originalSidebarStyles = {
+                backgroundColor: sidebar.style.backgroundColor,
+                color: sidebar.style.color
+            };
+
+            const cards = content.querySelectorAll('.card');
+            const originalCardShadows = [];
+            cards.forEach(card => {
+                originalCardShadows.push(card.style.boxShadow);
+            });
+
             const toggles = document.querySelectorAll('.toggle-content');
             const originalDisplay = [];
             toggles.forEach(el => {
                 originalDisplay.push(el.style.display);
+            });
+
+            // 強制樣式
+            header.style.display = 'none';
+            main.style.animation = 'none';
+            main.style.opacity = '1';
+            main.style.transform = 'none';
+            main.style.backgroundColor = '#ffffff';
+            main.style.color = '#000000';
+
+            sidebar.style.backgroundColor = '#ffffff';
+            sidebar.style.color = '#000000';
+
+            cards.forEach(card => {
+                card.style.boxShadow = 'none';
+                card.style.backgroundColor = '#ffffff';
+                card.style.color = '#000000';
+            });
+
+            toggles.forEach(el => {
                 el.style.display = 'block';
             });
 
+            await document.fonts.ready;
             await new Promise(resolve => setTimeout(resolve, 500));
 
-            await html2canvas(content,{
-                scale:2,
+            await html2canvas(content, {
+                scale: 2,
                 useCORS: true
-            }).then(canvas =>{
+            }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
                 const imgProps = pdf.getImageProperties(imgData);
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight);
-                pdf.save('AngelaKo_Resume.pdf')
-                
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save('AngelaKo_Resume.pdf');
             });
 
+            // 還原所有樣式
+            header.style.display = originalHeaderDisplay;
+            Object.assign(main.style, originalMainStyles);
+            Object.assign(sidebar.style, originalSidebarStyles);
+            cards.forEach((card, i) => {
+                card.style.boxShadow = originalCardShadows[i];
+            });
             toggles.forEach((el, i) => {
                 el.style.display = originalDisplay[i];
             });
         }
+
+
+
 
         function toggleLanguage(){
             alert("我還沒做好啦");
