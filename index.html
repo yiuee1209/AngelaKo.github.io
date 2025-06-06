@@ -95,19 +95,24 @@
             justify-content: flex-end;
             
         }
-        #chatbox{
+        #chatbox {
+            position: absolute;
+            top: 100px;
+            left: 100px;
             background: #fff;
             border: 1px solid #ddd;
             border-radius: 12px;
             padding: 1rem;
-            margin-top: 1rem;
             display: none;
             flex-direction: column;
             height: 300px;
-            width:280px;
-            word-wrap: break-word; 
-            overflow-wrap: break-word; 
-            margin-left: 1rem
+            width: 280px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            resize: both;
+            overflow: auto;
+            cursor: move;
+            z-index: 2000;
         }
         #chatlog{
             flex-grow: 1;
@@ -239,6 +244,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
+        
+        let chatbox = document.getElementById("chatbox");
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        chatbox.addEventListener("mousedown", function(e) {
+            if (e.target.closest("#userInput")) return; // 避免拖動輸入區
+            isDragging = true;
+            offsetX = e.clientX - chatbox.offsetLeft;
+            offsetY = e.clientY - chatbox.offsetTop;
+            chatbox.style.cursor = "grabbing";
+        });
+        
+        document.addEventListener("mousemove", function(e) {
+            if (isDragging) {
+                chatbox.style.left = (e.clientX - offsetX) + "px";
+                chatbox.style.top = (e.clientY - offsetY) + "px";
+            }
+        });
+
+        document.addEventListener("mouseup", function() {
+            isDragging = false;
+            chatbox.style.cursor = "move";
+        });
+        
         function toggleSection(button){
             const content = button.nextElementSibling;
             content.style.display = (content.style.display === 'block') ? 'none':'block';
