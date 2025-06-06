@@ -42,7 +42,7 @@
             min-height: 100vh;
         }
         .sidebar{
-            background-color: #f7e8eb;
+            background-color: #fdfcfc;
             padding: 2rem;
             width: 280px;
             flex-shrink: 0;
@@ -246,8 +246,9 @@
         async function downloadPDF(){
             const {jsPDF}=window.jspdf;
             const pdf = new jsPDF('p','mm','a4');
-            const content = document.body;
-
+            const content = document.querySelector('.container'); //document.body;
+            content.style.backgroundColor = '#ffffff';
+            
             const toggles = document.querySelectorAll('.toggle-content');
             const originalDisplay = [];
             toggles.forEach(el => {
@@ -255,7 +256,7 @@
                 el.style.display = 'block';
             });
 
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 500));
 
             await html2canvas(content,{
                 scale:3,
