@@ -52,19 +52,11 @@
             justify-content: space-between;
             padding-top: 3rem;
             padding-left: 1.5rem;
-            
-            position: relative; /* 確保 z-index 有效 */
-            z-index: 1;
-
         }
         .main{
             flex-grow: 1;
             padding: 2rem;
             animation: fadeIn 1s ease;
-
-            position: relative;
-            z-index: 2; /* 比 sidebar 高 */
-
         }
         .card{
             background-color: #fff;
@@ -168,7 +160,7 @@
         <button class="menu-btn" onclick="toggleChat()">啟用AI聊天室</button>
     </header>
     <div class="container">
-        <aside class="siderbar">
+        <aside class="sidebar">
             <div>
                 <h2>柯婷堉：Angela Ko</h2>
                 <p>職稱 / 數據分析師</p>
