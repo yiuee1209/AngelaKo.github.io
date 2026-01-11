@@ -16,40 +16,12 @@ A modern, high-end glassmorphism portfolio website featuring a generative AI ass
 - **Conversation Logging**: All user queries are securely saved to **Google Cloud Firestore**.
 - **Premium Aesthetics**: Glassmorphism UI, custom scrollbars, and smooth entrance animations.
 
-## 🏁 Deployment Checklist (To-Do)
-Before going live, ensure you've completed these steps:
-- [ ] **Google Cloud**: Create Firestore database (**Native Mode**).
-- [ ] **Cloud Run**: Deploy backend with `GEMINI_API_KEY` and `API_SECRET_TOKEN`.
-- [ ] **Frontend**: Update `CHAT_API` in `assets/js/ai-bot.js` with your Cloud Run URL.
-- [ ] **Security**: Ensure the same secret token is set in `assets/js/ai-bot.js` (line 3).
-- [ ] **GitHub Pages**: Push files and enable the "Pages" feature in repo settings.
-
----
-
 ## 📂 Project Structure
 - **`index.html`**: The main interface entry point.
 - **`data/resume-data.js`**: **[EDIT HERE]** The core data. Modify this to update your resume content.
 - **`assets/js/renderer.js`**: Handles the dynamic rendering and class-based collapsibility logic.
 - **`assets/js/ai-bot.js`**: Controls the chat logic and keyword-based interaction.
 - **`backend/main.py`**: Flask server optimized for Gemini 1.5/2.5 Flash and Firestore logging.
-
----
-
-## 🚀 Deployment Guide (Google Cloud Run)
-
-### 1. Backend API Setup
-1. **Google Cloud CLI**: Ensure it's installed and you are logged in (`gcloud auth login`).
-2. **Enable Firestore**: Create a database in **Native Mode**.
-3. **Deploy**:
-   ```powershell
-   cd backend
-   gcloud run deploy angela-ai-api --source . --region asia-east1 --allow-unauthenticated --set-env-vars GEMINI_API_KEY=[YOUR_KEY],API_SECRET_TOKEN=[YOUR_CUSTOM_TOKEN] --max-instances 2
-   ```
-
-### 2. Frontend Setup (GitHub Pages)
-1. **API URL**: Update `CHAT_API` and `API_TOKEN` in `assets/js/ai-bot.js`.
-2. **Push**: Upload the frontend files to your GitHub repository.
-3. **Activate**: Enable GitHub Pages in Repository Settings.
 
 ---
 
@@ -80,25 +52,6 @@ Before going live, ensure you've completed these steps:
 - **診斷工具**：內建 `/debug` 路由，方便檢查資料讀取與 Firestore 連線狀態。
 - **語系切換**：支援即時切換中英文。
 - **對話日誌**：整合 **Google Cloud Firestore** 記錄互動。
-
-## 🏁 部署檢查清單 (To-Do)
-- [ ] **Google Cloud**：建立 Firestore 資料庫。
-- [ ] **Cloud Run**：部署後端並設定 `GEMINI_API_KEY` 與 `API_SECRET_TOKEN`。
-- [ ] **前端設定**：在 `assets/js/ai-bot.js` 更新 `CHAT_API` 與 `API_TOKEN`（第 3 行）。
-- [ ] **GitHub Pages**：推送到 GitHub 並開啟 Pages 功能。
-
----
-
-## 🚀 部署教學 (Google Cloud Run)
-
-### 1. 後端部署
-在 `backend` 資料夾下執行：
-```powershell
-gcloud run deploy angela-ai-api --source . --region asia-east1 --allow-unauthenticated  --set-env-vars GEMINI_API_KEY=[您的金鑰],API_SECRET_TOKEN=[您的Token] --max-instances 2
-```
-
-### 2. 前端部署
-在 `assets/js/ai-bot.js` 更新 API 資訊後，上傳至 GitHub Pages。
 
 ---
 
