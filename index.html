@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TINYUH KO | Professional Portfolio | 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="logo">柯婷堉 | Angela Ko | Personal Resume</div>
+        <div class="header-actions">
+            <button class="menu-btn lang-btn" onclick="toggleLanguage()">English</button>
+            <button class="menu-btn" onclick="window.print()">下載 PDF</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar-content">
+            <!-- Content loaded by renderer.js -->
+            <div style="text-align: center; padding: 2rem;">Loading...</div>
+        </aside>
+
+        <main class="main" id="main-content">
+            <!-- Content loaded by renderer.js -->
+        </main>
+    </div>
+
+    <div id="ai-assistant">
+        <div id="chatbox">
+            <div id="chatHeader">
+                <span>Angela's 智慧助理</span>
+                <span style="cursor:pointer" onclick="toggleChat()">✕</span>
+            </div>
+            <div id="chatlog"></div>
+            <div id="typing-indicator" style="display: none; padding: 0.5rem 1rem; color: #888; font-size: 0.8rem; font-style: italic;">Angela is typing...</div>
+            <div id="userInput">
+                <input type="text" id="chatInput" placeholder="Ask me something..." onkeypress="if(event.key === 'Enter') sendMessage()">
+                <button class="menu-btn" onclick="sendMessage()" style="padding: 0.5rem 1rem;">Send</button>
+            </div>
+        </div>
+        <div id="ai-toggle" onclick="toggleChat()">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/lib/marked.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+    <script src="data/resume-data.js"></script>
+    <script src="assets/js/renderer.js"></script>
+    <script src="assets/js/ai-bot.js"></script>
+</body>
+</html>

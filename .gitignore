@@ -1,0 +1,8 @@
+# Files to exclude from Git
+*.pyc
+__pycache__/
+.env
+api_key.txt
+
+# Development dependencies
+assets/node_modules/
